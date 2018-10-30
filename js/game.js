@@ -95,17 +95,18 @@ window.onload = () => {
     // start screen
     if (winScreen === 2) {
       canvasContext.fillStyle = 'white';
-      canvasContext.fillText("Click to start game!", 330, 280)
+      canvasContext.fillText("Click to start game!", 330, 270)
+      canvasContext.fillText("Score 3 points to win!", 323, 310)
     }
 
     //winning screen
     else if (winScreen === 1) {
       canvasContext.fillStyle = 'white';
-      player1 >= winScore ? canvasContext.fillText("Left player won!", 350, 100) :
-        player2 >= winScore ? canvasContext.fillText("Right player won!", 350, 100) :
+      player1 >= winScore ? canvasContext.fillText("You won!", 360, 200) :
+        player2 >= winScore ? canvasContext.fillText("Computer won!", 340, 200) :
         null;
 
-      canvasContext.fillText("Click to continue!", 350, 500)
+      canvasContext.fillText("Click to continue!", 330, 400)
 
     } else {
       // net
@@ -117,8 +118,10 @@ window.onload = () => {
       //ball
       colorCircle(ballX, ballY, 10, 'white');
       // first player score
+      canvasContext.fillText("You", 90, 75);
       canvasContext.fillText(player1, 100, 100);
       // second player score
+      canvasContext.fillText("Computer", canvas.width - 135, 75);
       canvasContext.fillText(player2, canvas.width - 100, 100);
     }
   }

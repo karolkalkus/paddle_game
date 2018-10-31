@@ -1,9 +1,6 @@
 //variables
-let ballX = 200;
-let ballY = 200;
-
-let ballSpeedX = 10;
-let ballSpeedY = 4;
+let ballSpeedX = 15;
+let ballSpeedY = 0;
 
 let paddle1Y = 250;
 let paddle2Y = 250;
@@ -21,6 +18,8 @@ const winScore = 3;
 window.onload = () => {
   const canvas = document.getElementById('game');
   const canvasContext = canvas.getContext('2d');
+  let ballX = canvas.width / 2;
+  let ballY = canvas.height / 2;
   canvasContext.font = "18px Georgia";
   const framesPerSecond = 30;
   setInterval(() => {
@@ -30,8 +29,9 @@ window.onload = () => {
 
   // right paddle computer move
   const computerMove = () => {
-    const paddleComp = paddle2Y + (paddle_height / 2);
-    paddleComp < ballY - 35 ? paddle2Y += 6 : paddleComp > ballY + 35 ? paddle2Y -= 6 : null;
+    let speed = Math.abs(ballSpeedY);
+    let indent = (speed > 9) ? -10 : 47;
+    paddle2Y = ballY - indent;
   }
 
   // ball move function
@@ -44,8 +44,8 @@ window.onload = () => {
     ballY += ballSpeedY;
 
     //ball hits the left wall
-    if (ballX < 10) {
-      if (ballY > paddle1Y && ballY < paddle1Y + paddle_height + 10) {
+    if (ballX < 20) {
+      if (ballY > paddle1Y - 10 && ballY < paddle1Y + paddle_height + 10) {
         ballSpeedX = -ballSpeedX
 
         const acc = ballY - (paddle1Y + paddle_height / 2);
@@ -57,8 +57,8 @@ window.onload = () => {
     }
 
     //ball hits the right wall 
-    if (ballX > canvas.width - 10) {
-      if (ballY > paddle2Y && ballY < paddle2Y + paddle_height) {
+    if (ballX > canvas.width - 20) {
+      if (ballY > paddle2Y - 10 && ballY < paddle2Y + paddle_height + 10) {
         ballSpeedX = -ballSpeedX
         const acc = ballY - (paddle2Y + paddle_height / 2);
         ballSpeedY = acc * 0.35;
@@ -76,6 +76,7 @@ window.onload = () => {
     if (player1 >= winScore || player2 >= winScore)
       winScreen = 1;
     ballSpeedX = -ballSpeedX;
+    ballSpeedY = 0;
     ballX = canvas.width / 2;
     ballY = canvas.height / 2;
   }
@@ -116,7 +117,7 @@ window.onload = () => {
       //right paddle
       colorRect(canvas.width - paddle_thickness, paddle2Y, paddle_thickness, paddle_height, 'white');
       //ball
-      colorCircle(ballX, ballY, 10, 'white');
+      colorCircle(ballX, ballY, 6, 'white');
       // first player score
       canvasContext.fillText("You", 90, 75);
       canvasContext.fillText(player1, 100, 100);
